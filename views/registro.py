@@ -1,8 +1,8 @@
 import time
 import streamlit as st
-from auth import registrar_usuario
+from controllers.auth_controller import registrar_usuario
 
-st.title("📝 Crear cuenta")
+st.title("Registrar cuenta")
 
 nombre = st.text_input("Nombre")
 apellido = st.text_input("Apellido")

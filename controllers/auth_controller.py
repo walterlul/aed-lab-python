@@ -104,5 +104,40 @@ def registrar_usuario(nombre: str, apellido: str, username: str, email: str, pas
         db.close()
 
 
-def iniciar_sesion(username, password):
-    pass
+def iniciar_sesion(username:str, password:str):
+    db = SessionLocal()
+    try:
+        #Buscar usuario x username
+        usuario = obtener_usuario(username)
+
+        if not usuario:
+            return {
+                "success": False,
+                "message": "Usuario o contraseña incorrecto",
+                "data": None
+            }
+        if not verify_password(password, usuario.password):
+            return {
+                "success": False,
+                "message": "Usuario o contraseña incorrecto",
+                "data": None
+            }
+        return {
+            "success": True,
+            "message": "Inicio de sesión exitoso",
+            "data": {
+                "id": usuario.id,
+                "nombre": usuario.nombre,
+                "apellido": usuario.apellido,
+                "email": usuario.email,
+                "rol": usuario.rol
+            }
+        }
+    except Exception as e:
+        return{
+            "success": False,
+            "message": f"Error al iniciar sesion: {str(e)}",
+            "data": None
+        }
+    finally:
+        db.close()
