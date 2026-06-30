@@ -133,11 +133,15 @@ def iniciar_sesion(username:str, password:str):
                 "rol": usuario.rol
             }
         }
+    
+    
     except Exception as e:
         return{
             "success": False,
             "message": f"Error al iniciar sesion: {str(e)}",
             "data": None
         }
+    
+
     finally:
         db.close()
